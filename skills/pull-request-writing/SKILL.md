@@ -16,6 +16,11 @@ Write the PR for a reviewer who has not read the agent conversation. The title a
 5. **Keep links and receipts compact.** Put issue and spec links plus required review evidence in one short validation section. Link to operational output (logs, run pages, dashboards) instead of pasting it inline.
 6. **Rewrite the title and body when the scope changes.** A title that fit the first diff but not the final one misleads every later reader.
 7. **Describe the entire final diff, not the last fix.** Review the whole PR against its base including every inherited commit. A correction-only diff is not the PR scope: the title and body must name all material final changes, the hosted validation actually run on the final head, and remaining limits — never only the last one-line fix. A narrower follow-up description that omits inherited scope contradicts this rule; keep every inherited change in scope.
+   For a stacked PR, compare against its immediate parent's branch. Describe
+   that complete incremental diff and link the prerequisite and stack; do not
+   present lower layers as new changes in every child. Separately name
+   cumulative integration checks, their tested heads/bases, and the intended
+   merge prefix. Refresh the description and evidence after restacking.
 8. **Keep lasting norms in the canonical spec package.** Requirements, behavior, architecture decisions, and normative tool or quality rationale belong in the existing spec structure (spec, plan, contracts, tasks), updated in place. Do not publish standalone rationale reports, selection notes, parallel design documents, or status histories beside it. This is not authority for blanket deletion: preserve legitimate user, API, and reference docs. Before publication, verify each new normative document belongs to the canonical structure and its links resolve. Attempt details, run pages, and review receipts stay linked from the PR, not duplicated into lasting docs. Use generic examples only; keep private project names, paths, and receipts out of public prose.
 
 ## Mechanics
@@ -79,7 +84,7 @@ failed-item state keeps one bad upload from stalling the rest.
 - `radical-brevity`: make a final meaning-preserving cut after the required context and evidence are in place.
 - `gate-before-push`: run the repository's own gates locally first so the described validation is already green.
 - `github-pr-shepherding`: classify the PR from GitHub state and drive it to merged or explicitly blocked.
-- `stacked-diff-discipline`: keep each stacked member small and drafted so each description stays truthful.
+- `stacked-diff-discipline`: keep each layer small, document its parent and native stack, and distinguish incremental review from cumulative validation.
 - `evidence-claim-boundaries`: decide what a given piece of evidence actually supports before you claim it in the validation section.
 
 ## DONE means

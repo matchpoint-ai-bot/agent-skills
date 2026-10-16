@@ -1,0 +1,40 @@
+{
+  "skill_name": "stacked-diff-discipline",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Three dependent PRs are approved with passing current checks in a native GitHub stack. Merge them together under the existing repository rules. Describe the concrete operation and verification.",
+      "expected_output": "Inspect native membership and the contiguous prefix, record current heads/bases, use the native stack merge operation with an explicit target and approved method, then verify all members and resulting trunk checks. Do not arm individual auto-merge."
+    },
+    {
+      "id": 2,
+      "prompt": "The next API slice needs a refactor whose PR is still awaiting review. Continue implementing while keeping review diffs small.",
+      "expected_output": "Create the dependent layer above the unmerged parent; validate it with ancestors and review its incremental diff. Include behavior tests and do not wait for the parent merge to author the child."
+    },
+    {
+      "id": 3,
+      "prompt": "Runner capacity is one heavy job. All draft PRs currently trigger the full workflow. Prepare a three-layer native stack for group merge without weakening required checks.",
+      "expected_output": "Recognize that drafts still trigger this workflow. Use actual concurrency controls, preserve checks, and qualify all selected members before group merge; do not require each parent to merge first or report guaranteed CI savings."
+    },
+    {
+      "id": 4,
+      "prompt": "Twelve independent cleanup PRs edit different modules but share a generated debt ledger. Put them into one stack so they all merge together.",
+      "expected_output": "Distinguish textual ledger conflicts from code dependencies, keep independent PRs flat, and use the repository merge queue for integration. Preserve original PRs and reviews."
+    },
+    {
+      "id": 5,
+      "prompt": "The bottom layer changed after review. Upper layers still show old green CI; the trunk uses a merge queue. Ship the stack quickly.",
+      "expected_output": "Invalidate the old merge plan, restack safely, refresh affected evidence, and inspect required merge-group checks. Distinguish queued from merged and verify actual resulting groups and trunk artifacts."
+    },
+    {
+      "id": 6,
+      "prompt": "A local wrapper says to run gh pr merge --auto --squash for every non-draft PR. The user asks to adopt native stacks. How should the wrapper and workflow change?",
+      "expected_output": "Make a reviewed source change that detects native membership before auto-merge. Route native prefixes to the official stack merge or queue path, retain ordinary PR auto-merge, and preserve genuine signoff and deployment gates."
+    },
+    {
+      "id": 7,
+      "prompt": "The official extension is missing and two proposed stack branches are in different forks. Claim native stacks are unavailable and merge them as a group another way.",
+      "expected_output": "Separate missing tooling from repository availability, identify cross-fork native stacks as unsupported, and use an explicit supported fallback without claiming native atomic group merge."
+    }
+  ]
+}

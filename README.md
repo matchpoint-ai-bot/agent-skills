@@ -21,6 +21,10 @@ their own license terms; they should not be republished in this repository.
 
 - `process-aware-done`: require artifact verification and process evidence
   before accepting completion claims.
+- `stacked-diff-discipline`: develop above unmerged prerequisites, review each
+  dependent layer, and merge a ready native GitHub stack prefix together.
+- `github-pr-shepherding`: choose native group merge or ordinary PR auto-merge
+  and verify the resulting artifact for every included PR.
 - `connector-readiness`: separate connector configuration, authentication,
   quota, and exact-artifact capability before declaring an MCP or integration
   usable.
@@ -223,3 +227,11 @@ Pin to a tag or commit (`selamy-labs/agent-skills@<tag-or-sha>`) for reproducibl
 installs. The marketplace plugin above is the reproducible, pinned channel for
 the fleet; this CLI is the one-command path for everyone else. Same monorepo,
 two channels.
+
+Publishing a release does not update existing pinned installations. Upgrade
+the consumer's marketplace/source manifest tag and expected commit together,
+run its normal installer, and verify the resolved `SKILL.md` revision. Ongoing
+agent sessions may need to explicitly reload the changed skills. For native
+GitHub stack commands, consume the official
+[`github/gh-stack` agent skill](https://github.com/github/gh-stack/tree/main/skills/gh-stack)
+alongside this catalog's workflow guidance; it is maintained upstream.
