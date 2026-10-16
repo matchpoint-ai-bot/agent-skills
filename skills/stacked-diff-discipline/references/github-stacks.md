@@ -9,6 +9,7 @@ arguments and machine-readable output; interactive commands may open a UI.
 ## Minimal authoring loop
 
 Use an authenticated account with branch-write access to the target repository.
+Use the same verified authentication context for reads and mutations.
 Install the official extension if absent:
 
 ```bash
@@ -31,12 +32,17 @@ gh stack view --json
 `submit --auto` opens drafts with generated titles/bodies. Edit each description
 to explain its full diff against its immediate parent and link the dependency.
 Use `--open` when members are ready for review and CI; `--auto` is not auto-merge.
+`--open` also readies existing members. For a partial prefix, mark only its
+selected PRs ready with `gh pr ready <pr>`. Push/submit are not atomic; inspect
+partial remote results after an error before retrying.
 
 After editing a lower layer, run `gh stack rebase --upstack` from that layer,
 resolve in the worktree named by the diagnostic, and push the reconciled stack.
 Use `gh stack sync` to reconcile with GitHub; inspect resulting heads and
 membership, not just exit code zero. Upstream documents a divergence case that
 prints `Sync aborted` while exiting successfully.
+`view --json` contains local saved base SHAs and best-effort remote refresh;
+verify current GitHub heads, bases, checks, and membership before merging.
 
 Once the selected prefix is qualified, inspect its explicit highest included
 PR and use `gh stack merge <highest-included-pr> --yes --squash` if squash is the
