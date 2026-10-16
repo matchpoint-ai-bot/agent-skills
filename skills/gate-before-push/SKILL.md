@@ -12,7 +12,7 @@ Open a PR only after it would already go green. Every red CI iteration costs a f
 The trap is running the obvious checks (build, unit tests) and missing the **bespoke** ones that only this repo enforces — the gates you'd otherwise discover failing only after a runner picks the PR up.
 
 1. **Open the CI definition** (the workflow / pipeline config) and enumerate every gate step in order: lint, format, type-check, tests + coverage threshold, and the project-specific scanners — secret/privacy scanners, dependency/denylist drift, license checks, API-stability checks, and PR-title/commit-message validators for squash-release repos.
-2. **Run each step's exact command locally**, in the same order. Use the repo's own scripts (the same entrypoints CI calls), not a paraphrase — a paraphrase drifts from what CI actually runs.
+2. **Run each locally reproducible step's exact command**, in the same order. Use the repo's own scripts (the same entrypoints CI calls), not a paraphrase. Identify platform-only checks explicitly, record the hosted run needed, and keep them pending until they actually pass; do not claim they were reproduced locally.
 3. **Fix locally until all are green.** A bespoke scanner often false-positives on innocent text (e.g. a phrase that resembles a secret pattern); reword and re-run rather than pushing and hoping.
 4. **Match the metadata gates too** — if CI validates the PR title or commit format (conventional commits, squash-release prefixes), confirm yours conforms before opening the PR.
 
@@ -32,11 +32,17 @@ Treat this as a high-value opportunity, not a universal gate. Do not manufacture
 
 ## Pairs with
 
-- CI economy: a locally-green PR is the per-PR analogue of keeping a stack short and its upper members drafted — don't multiply runner load with avoidable red runs.
+- `stacked-diff-discipline`: validate each layer on its actual parent and the selected stack's cumulative result. Bound runner use with verified workflow controls; draft status alone does not suppress CI. Qualify a ready prefix before group merge rather than waiting for every parent to merge first.
 - Green locally is **not** done: done is merged + the artifact verified on the default branch, not a passing local run.
 
 ## DONE means
 
-Before the PR opened, every gate the CI will run was run locally from the repo's own entrypoints and passed (including the bespoke scanners and the title/commit validators); the PR's **first** CI run is green; no red-iterate-push cycles were spent on issues that were findable locally. When visual evidence was embedded, the saved, rendered PR page was inspected and every expected image loaded with non-zero dimensions.
+Before the PR opened, locally reproducible gates passed using the repository's
+own entrypoints, including bespoke scanners and metadata validators.
+Platform-only checks have explicit pending runs and must succeed before merge.
+Avoid CI iterations on failures discoverable locally; investigate hosted or
+infrastructure failures from actual evidence rather than claiming local proof.
+When visual evidence was embedded, inspect the saved rendered PR and verify
+every expected image loaded with non-zero dimensions.
 
 Sources: shift-left / fail-fast testing practice; trunk-based development pre-merge checks; conventional-commit release gating.

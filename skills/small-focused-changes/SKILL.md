@@ -1,6 +1,6 @@
 ---
 name: small-focused-changes
-description: Use when planning or breaking down any change: a PR, a refactor, a feature, or a delegated unit of work. Bias toward a series of small, single-concern, independently-revertible changes over one large one.
+description: Use when planning or breaking down any change: a PR, a refactor, a feature, or a delegated unit of work. Bias toward small, single-concern changes with explicit dependencies and a clear revert plan.
 ---
 
 # Small, Focused Changes
@@ -8,7 +8,10 @@ description: Use when planning or breaking down any change: a PR, a refactor, a 
 Prefer a **series of small, single-concern changes** over one large one. Small diffs are statistically more correct, faster to review, and easy to revert if something goes wrong. This applies to PRs **and** to delegated work — chop dispatches into small units too.
 
 ## The rule
-**One concern per change.** Each unit should be independently shippable and independently revertible. If reverting your change would also undo an unrelated improvement, it's two changes wearing one hat.
+**One concern per change.** Independent units ship and revert separately.
+Dependent layers ship with their declared prerequisites; revert affected
+dependents from the top down. If reverting a change also undoes an unrelated
+improvement, it contains more than one concern.
 
 ## Why
 - **Correctness**: smaller diffs have fewer places for bugs to hide and get genuinely reviewed (large PRs get rubber-stamped).
@@ -18,8 +21,8 @@ Prefer a **series of small, single-concern changes** over one large one. Small d
 
 ## How to decompose
 1. **Find the seams**: separate refactor-then-change (first a behavior-preserving refactor, then the behavior change), interface-then-impl, scaffolding-then-feature.
-2. **Make each unit stand alone**: it should build, keep tests green, and be mergeable on its own — not "part 3 of 5 that only works with the others."
-3. **Sequence by dependency**, ship in order; later units build on merged earlier ones.
+2. **Make each unit coherent on its declared base**: it builds and passes tests with its prerequisites, without needing a later layer. Include its behavior tests in the same layer.
+3. **Sequence by dependency**: branch dependent units from their unmerged prerequisites and review them in parallel. Use `stacked-diff-discipline` to merge a ready contiguous prefix together where native stacks are supported. Independent units stay flat; a shared tracker or ledger is not a code dependency.
 4. **Keep mechanical churn separate** from logic: a rename or formatting sweep is its own change so the logic diff stays readable.
 5. **For delegated work**: hand out one small, reversible unit per dispatch — not a big multi-part dispatch. The same correctness/reversibility math applies one level down.
 
