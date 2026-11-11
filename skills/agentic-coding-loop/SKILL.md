@@ -95,10 +95,13 @@ judgment in the model and the control flow in deterministic code:
   exists, required checks are green on its exact head commit, no feedback or
   unresolved review thread is pending, and the branch contains its base's
   current head. A model's claim of "done" changes nothing.
-- **Narrow blocker contract.** Only a missing contract owned by another unit of
-  work is a blocker. Merge conflicts, missing pins or tools, scaffolding, and
-  failing gates are work. A blocked worker writes one line with a fixed prefix
-  and stops; the coordinator verifies the claim before accepting it.
+- **Narrow blocker contract.** Preserve all Stop Conditions below, including
+  missing credentials or access, bounded failures, authority or scope limits,
+  and verification that cannot be independent. Within those boundaries, repair
+  merge conflicts, missing pins or tools, scaffolding, and failing gates; a
+  missing contract owned by another unit of work is an external blocker. A
+  blocked worker writes one line with a fixed prefix and stops; the coordinator
+  verifies the claim before accepting it.
 - **Isolation.** One worktree, branch, and state directory per loop. Bound
   every external call with a timeout, and stop processes only by the exact
   process IDs the loop recorded.
