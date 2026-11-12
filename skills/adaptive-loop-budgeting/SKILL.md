@@ -107,8 +107,9 @@ cheapest model that passes the mechanical checks:
 - A run that ends unfinished starts the next run one rung higher, so a hard
   task does not repeat its full climb.
 - Provider rate, quota, or credit limits are waits, not attempts. After a
-  bounded wait, send that iteration to another provider pool instead of
-  escalating the rung.
+  bounded wait, send that iteration only to a pre-approved provider pool using
+  its already-authorized credentials instead of escalating the rung. If none
+  is available, wait or report blocked; do not expand provider or credential scope.
 - Reserve the strongest models for independent review and the top rung.
 - Record the rung and cost per change so repeated escalation shows up as a
   signal about the task, the directive, or the checks.
